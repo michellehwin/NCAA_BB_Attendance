@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCAA WBB Attendance</title>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega@5.22.1/build/vega.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-lite@4.17.0/build/vega-lite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.0.0/build/vega-embed.min.js"></script>
+
+</head>
+
+<body>
+    <form method="POST">
+        <label for="team_id">Team ID:</label><br>
+        <input list="suggestions" id="answerInput">
+        <datalist id="suggestions">
+            {% for team in context.team_ids %}
+            <option data-value="{{ context.team_ids[team] }}">{{ team }}</option>
+                {% endfor %}
+        </datalist>
+        <input type="hidden" name="team_id" id="answerInput-hidden">
+        <input type="submit">
+    </form>
+    <h1>WBB Attendance</h1>
+    <div id="attendance"></div>
+    <p>Average Home Attendance: {{context.avg_home_attendance}}</p>
+    <script>
+        (function (vegaEmbed) {
+            var spec = {{ context.attendance_graph | safe }};
+        var embedOpt = { "mode": "vega-lite" };
+
+        function showError(el, error) {
+            el.innerHTML = ('<div class="error" style="color:red;">'
+                + '<p>JavaScript Error: ' + error.message + '</p>'
+                + "<p>This usually means there's a typo in your chart specification. "
+                + "See the javascript console for the full traceback.</p>"
+                + '</div>');
+            throw error;
+        }
+        const el = document.getElementById('vis');
+        vegaEmbed("#attendance", spec, embedOpt)
+            .catch(error => showError(el, error));
+        }) (vegaEmbed);
+
+    </script>
+    <script>
+    console.log(document.querySelector('input[list]'))
+        document.querySelector('input[list]').addEventListener('input', function(e) {
+        var input = e.target,
+            list = input.getAttribute('list'),
+            options = document.querySelectorAll('#' + list + ' option'),
+            hiddenInput = document.getElementById(input.getAttribute('id') + '-hidden'),
+            inputValue = input.value;
+    console.log(options)
+        hiddenInput.value = inputValue;
+
+        for(var i = 0; i < options.length; i++) {
+            var option = options[i];
+
+            if(option.innerText === inputValue) {
+                hiddenInput.value = option.getAttribute('data-value');
+                break;
+            }
+        }
+    });
+    </script>
+</body>
+
+</html>

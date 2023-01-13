@@ -1,0 +1,147 @@
+{
+    "config": {
+        "view": {
+            "continuousWidth": 400,
+            "continuousHeight": 300
+        }
+    },
+    "data": {
+        "name": "data-600dde48f6e61f917a1bc71550d2b6b9"
+    },
+    "mark": "bar",
+    "encoding": {
+        "color": {
+            "field": "Location",
+            "scale": {
+                "domain": [
+                    "Home",
+                    "Away",
+                    "Neutral"
+                ],
+                "range": [
+                    "#bf5700",
+                    "darkgray",
+                    "lightgray"
+                ]
+            },
+            "type": "nominal"
+        },
+        "x": {
+            "field": "Opponent",
+            "sort": [
+                "Louisiana",
+                "UConn",
+                "Marquette",
+                "Louisville",
+                "Rutgers",
+                "Princeton",
+                "South Florida",
+                "Southern",
+                "Alabama State",
+                "Jackson State",
+                "USC",
+                "Houston Christian",
+                "Texas A&M-Commerce",
+                "Kansas State",
+                "TCU",
+                "Oklahoma State",
+                "Kansas"
+            ],
+            "type": "nominal"
+        },
+        "y": {
+            "field": "Attendance",
+            "type": "quantitative"
+        }
+    },
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json",
+    "datasets": {
+        "data-600dde48f6e61f917a1bc71550d2b6b9": [
+            {
+                "Opponent": "Louisiana",
+                "Attendance": 5658.0,
+                "Location": "Home"
+            },
+            {
+                "Opponent": "UConn",
+                "Attendance": 10167.0,
+                "Location": "Away"
+            },
+            {
+                "Opponent": "Marquette",
+                "Attendance": 376.0,
+                "Location": "Neutral"
+            },
+            {
+                "Opponent": "Louisville",
+                "Attendance": 365.0,
+                "Location": "Neutral"
+            },
+            {
+                "Opponent": "Rutgers",
+                "Attendance": 155.0,
+                "Location": "Neutral"
+            },
+            {
+                "Opponent": "Princeton",
+                "Attendance": 5137.0,
+                "Location": "Home"
+            },
+            {
+                "Opponent": "South Florida",
+                "Attendance": 5021.0,
+                "Location": "Home"
+            },
+            {
+                "Opponent": "Southern",
+                "Attendance": 4987.0,
+                "Location": "Home"
+            },
+            {
+                "Opponent": "Alabama State",
+                "Attendance": 5116.0,
+                "Location": "Home"
+            },
+            {
+                "Opponent": "Jackson State",
+                "Attendance": 1200.0,
+                "Location": "Neutral"
+            },
+            {
+                "Opponent": "USC",
+                "Attendance": 4700.0,
+                "Location": "Neutral"
+            },
+            {
+                "Opponent": "Houston Christian",
+                "Attendance": 5021.0,
+                "Location": "Home"
+            },
+            {
+                "Opponent": "Texas A&M-Commerce",
+                "Attendance": 4589.0,
+                "Location": "Home"
+            },
+            {
+                "Opponent": "Kansas State",
+                "Attendance": 5126.0,
+                "Location": "Home"
+            },
+            {
+                "Opponent": "TCU",
+                "Attendance": 2317.0,
+                "Location": "Away"
+            },
+            {
+                "Opponent": "Oklahoma State",
+                "Attendance": 2288.0,
+                "Location": "Away"
+            },
+            {
+                "Opponent": "Kansas",
+                "Attendance": 4903.0,
+                "Location": "Home"
+            }
+        ]
+    }
+}
