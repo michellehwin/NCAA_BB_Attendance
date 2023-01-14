@@ -16,8 +16,9 @@ if __name__ == '__main__':
 
 @app.route("/")
 def attedance():
-    attendance_plot = attendance_graph(251)['chart']
-    context = {"attendance": attendance_plot, "team_ids": team_ids}
+    team_stats = attendance_graph(251)
+    context = {"attendance_graph": team_stats['chart'],
+               "avg_home_attendance": team_stats['avg_home_attendance'], "team_ids": team_ids}
 
     return render_template('index.html', context=context)
 
