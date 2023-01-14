@@ -10,10 +10,6 @@ team_ids = json.load(team_id_file)
 template_dir = os.path.abspath('.')
 app = Flask(__name__, template_folder=template_dir)
 
-if __name__ == '__main__':
-    app.run(debug=True)
-
-
 @app.route("/")
 def attedance():
     team_stats = attendance_graph(251)
