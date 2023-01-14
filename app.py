@@ -29,3 +29,7 @@ def get_team_id():
                    "avg_home_attendance": team_stats['avg_home_attendance'], "team_ids": team_ids}
         return render_template('index.html', context=context)
     return ('', 204)
+
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
