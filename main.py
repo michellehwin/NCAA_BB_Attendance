@@ -10,12 +10,12 @@ team_ids = json.load(team_id_file)
 template_dir = os.path.abspath('.')
 app = Flask(__name__, template_folder=template_dir)
 
+
 @app.route("/")
 def attedance():
     team_stats = attendance_graph(251)
     context = {"attendance_graph": team_stats['chart'],
                "avg_home_attendance": team_stats['avg_home_attendance'], "team_ids": team_ids}
-
     return render_template('index.html', context=context)
 
 
