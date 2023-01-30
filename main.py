@@ -21,11 +21,11 @@ CORS(app)
 
 @app.route("/")
 def attedance():
-    # team_stats = attendance_graph(251)
-    # context = {"attendance_graph": team_stats['chart'],
-    #            "avg_home_attendance": team_stats['avg_home_attendance'], "team_ids": team_ids}
-    # return render_template('index.html', context=context)
-    return plotly_attendance_graph(251)
+    team_stats = attendance_graph(251, "Texas Longhorns")
+    context = {"attendance_graph": team_stats['chart'],
+               "avg_home_attendance": team_stats['avg_home_attendance'], "team_ids": team_ids}
+    return render_template('index.html', context=context)
+    # return plotly_attendance_graph(251)
 
 
 @app.route('/', methods=['POST'])
