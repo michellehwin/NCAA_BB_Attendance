@@ -20,7 +20,7 @@
         <datalist id="suggestions">
             {% for team in context.team_ids %}
             <option data-value="{{ context.team_ids[team] }}">{{ team }}</option>
-                {% endfor %}
+            {% endfor %}
         </datalist>
         <input type="hidden" name="team_id" id="answerInput-hidden">
         <input type="submit">
@@ -48,25 +48,24 @@
 
     </script>
     <script>
-    console.log(document.querySelector('input[list]'))
-        document.querySelector('input[list]').addEventListener('input', function(e) {
-        var input = e.target,
-            list = input.getAttribute('list'),
-            options = document.querySelectorAll('#' + list + ' option'),
-            hiddenInput = document.getElementById(input.getAttribute('id') + '-hidden'),
-            inputValue = input.value;
-    console.log(options)
-        hiddenInput.value = inputValue;
+        document.querySelector('input[list]').addEventListener('input', function (e) {
+            var input = e.target,
+                list = input.getAttribute('list'),
+                options = document.querySelectorAll('#' + list + ' option'),
+                hiddenInput = document.getElementById(input.getAttribute('id') + '-hidden'),
+                inputValue = input.value;
+            console.log(options);
+            hiddenInput.value = inputValue;
 
-        for(var i = 0; i < options.length; i++) {
-            var option = options[i];
+            for (var i = 0; i < options.length; i++) {
+                var option = options[i];
 
-            if(option.innerText === inputValue) {
-                hiddenInput.value = option.getAttribute('data-value');
-                break;
+                if (option.innerText === inputValue) {
+                    hiddenInput.value = option.getAttribute('data-value');
+                    break;
+                }
             }
-        }
-    });
+        });
     </script>
 </body>
 
