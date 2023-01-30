@@ -1,0 +1,26 @@
+.teamSelect{
+    padding: 10px;
+    display: inline-block;
+    width: 300px;
+}
+.addTeamButton{
+    display: inline-block;
+}
+
+.graphContainer{
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.graphCloseButton{
+    display: inline-flex;
+    align-self: flex-start;
+}
+@media screen and (min-width: 600px) {
+    .graphContainer{
+        width:100%;
+    }
+    .graphContainer p{
+        width:100%;
+    }
+}
