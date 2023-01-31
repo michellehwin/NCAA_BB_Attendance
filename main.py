@@ -3,6 +3,7 @@
 # deactivate: deactivate
 # npm start: react
 # start flask: flask --app main --debug run
+# update reqs: pip freeze > requirements.txt
 
 import os
 from flask import Flask, request, render_template
@@ -22,7 +23,7 @@ CORS(app)
 @app.route("/")
 def attedance():
     team_stats = attendance_graph(251, "Texas Longhorns")
-    context = {"attendance_graph": team_stats['chart'],
+    context = {"attendance_graph": team_stats['attendance_graph'],
                "avg_home_attendance": team_stats['avg_home_attendance'], "team_ids": team_ids}
     return render_template('index.html', context=context)
     # return plotly_attendance_graph(251)
@@ -34,7 +35,7 @@ def get_team_id():
     print(f"team_id: {team_id}")
     if (team_id.isnumeric()):
         team_stats = attendance_graph(team_id)
-        context = {"attendance_graph": team_stats['chart'],
+        context = {"attendance_graph": team_stats['attendance_graph'],
                    "avg_home_attendance": team_stats['avg_home_attendance'], "team_ids": team_ids}
         return render_template('index.html', context=context)
     return ('', 204)
