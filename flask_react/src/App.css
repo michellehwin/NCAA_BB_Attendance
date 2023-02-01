@@ -7,18 +7,29 @@
     display: inline-block;
 }
 
+.teamContainer{
+    border: solid;
+    width: 100%;
+    margin: 10px; 
+}
+
 .graphContainer{
     padding: 10px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 .graphCloseButton{
     display: inline-flex;
     align-self: flex-start;
 }
 @media screen and (min-width: 600px) {
+    .teamContainer{
+        width: 100%; 
+        display: flex;
+    }
     .graphContainer{
-        width:100%;
+        width:50%;
     }
     .graphContainer p{
         width:100%;
