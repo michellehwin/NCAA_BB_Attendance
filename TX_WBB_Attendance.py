@@ -11,6 +11,14 @@ import json
 cache = TTLCache(maxsize=100, ttl=86400)
 
 
+class teamAttendanceInfo:
+    def __init__(self, df: pd.DataFrame, aha, w: bool, x: list[str]):
+        self.df = df
+        self.avg_home_attendance = aha
+        self.women = w
+        self.xSort = x
+
+
 @cached(cache)
 def plotly_attendance_graph(team_id):
 
@@ -64,12 +72,19 @@ def plotly_attendance_graph(team_id):
     graphJSON = plotly.io.to_json(fig, pretty=True)
     return graphJSON
 
+# processes string women to boolean women
+
 
 @cached(cache)
-def attendance_graph(team_id, team_name):
-    team_color = "#bf5700"
+def get_attendance_df(team_id, women) -> teamAttendanceInfo:
     season = 2023
-    url = f"http://www.espn.com/womens-college-basketball/team/schedule/_/id/{team_id}/season/{season}"
+    url = ""
+    if (women == "True" or women == "true"):
+        url = f"http://www.espn.com/womens-college-basketball/team/schedule/_/id/{team_id}/season/{season}"
+        women = True
+    else:
+        url = f"http://www.espn.com/mens-college-basketball/team/schedule/_/id/{team_id}/season/{season}"
+        women = False
 
     page = rq.get(url)
     soup = bs(page.content, features="lxml")
@@ -112,18 +127,36 @@ def attendance_graph(team_id, team_name):
     df = pd.DataFrame(data)
     if (home_game_count > 0):
         home_attendance = home_attendance/home_game_count  # calculate avg home attendance
+    return teamAttendanceInfo(df, home_attendance, women, data["Opponent"])
+
+
+@cached(cache)
+def attendance_graph(attendance_info: teamAttendanceInfo, team_name: str) -> dict:
+    team_color = "#bf5700"
+
+    women = attendance_info.women
+    df = attendance_info.df
+    xSort = attendance_info.xSort
+
+    title = ""
+    if (women):
+        title = team_name + " (W)"
+    else:
+        title = team_name + " (M)"
 
     chart = alt.Chart(df).mark_bar().encode(
-        x=alt.X('Opponent:O', sort=data["Opponent"]),
+        x=alt.X('Opponent:O', sort=xSort),
         y='Attendance',
         color=alt.Color('Location',
                         scale=alt.Scale(
                             domain=['Home', 'Away', 'Neutral'],
                             range=[team_color, 'darkgray', 'lightgray']))
+    ).resolve_scale(
+        x='independent'
     ).properties(
-        title=team_name
+        title=title
     )
     chart_json = chart.to_json()
     stats = {'attendance_graph': json.loads(chart_json),
-             'avg_home_attendance': home_attendance}
+             'avg_home_attendance': attendance_info.avg_home_attendance}
     return stats

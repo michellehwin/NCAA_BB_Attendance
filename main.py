@@ -7,7 +7,7 @@
 
 import os
 from flask import Flask, request, render_template
-from TX_WBB_Attendance import attendance_graph, plotly_attendance_graph
+from TX_WBB_Attendance import attendance_graph, get_attendance_df
 import json
 from flask_cors import CORS, cross_origin
 
@@ -26,13 +26,12 @@ def attedance():
     context = {"attendance_graph": team_stats['attendance_graph'],
                "avg_home_attendance": team_stats['avg_home_attendance'], "team_ids": team_ids}
     return render_template('index.html', context=context)
-    # return plotly_attendance_graph(251)
 
 
 @app.route('/', methods=['POST'])
 def get_team_id():
     team_id = request.form['team_id']
-    print(f"team_id: {team_id}")
+    # print(f"team_id: {team_id}")
     if (team_id.isnumeric()):
         team_stats = attendance_graph(team_id)
         context = {"attendance_graph": team_stats['attendance_graph'],
@@ -48,7 +47,8 @@ def generate_attendance_graph():
     team_id = args.get('team_id')
     if (team_id.isnumeric()):
         print(f"team_id: {team_id}")
-        return attendance_graph(team_id, args.get('team_name'))
+        attendance_info = get_attendance_df(team_id, args.get('women'))
+        return attendance_graph(attendance_info, args.get('team_name'))
     return ('', 204)
 
 
