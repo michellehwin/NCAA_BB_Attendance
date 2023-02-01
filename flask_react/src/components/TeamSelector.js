@@ -33,7 +33,12 @@ const TeamSelector = ({ teams, setTeams }) => {
     setSelectedTeam({ id: selectedOption.value, name: selectedOption.label });
   };
   const handleClick = (e) => {
-    setTeams([...teams, selectedTeam]);
+    console.log(selectedTeam.id);
+    if (teams.filter(e => e.id == selectedTeam.id).length == 0) {
+      setTeams([...teams, selectedTeam]);
+    } else {
+      alert("Team already added.");
+    }
   };
 
   return (
