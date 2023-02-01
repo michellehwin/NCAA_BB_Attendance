@@ -21,10 +21,13 @@ function App() {
       <header className="App-header">
       </header>
       <TeamSelector setTeams={setTeams} teams={teams} />
-      <div id="attendance" className='addTeamButton'></div>
       {
         teams.map((team) => (
-          <Graph team={team} key={team.id} deleteGraph={deleteGraph} />
+          <div className='teamContainer'>
+            <Graph team={team} key={team.id + "W"} deleteGraph={deleteGraph} women={true} />
+            <Graph team={team} key={team.id + "M"} deleteGraph={deleteGraph} women={false} />
+            <button onClick={() => deleteGraph(team)} className='graphCloseButton'>X</button>
+          </div>
         ))
       }
     </div>

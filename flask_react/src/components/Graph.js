@@ -2,12 +2,15 @@ import React from 'react';
 import { useEffect, useState } from "react";
 import embed from 'vega-embed';
 
-const Graph = ({ team, deleteGraph }) => {
+const Graph = ({ team, deleteGraph, women }) => {
+
 
     const [graph, setGraph] = useState(null);
     useEffect(() => {
         console.log(team.id);
-        fetch(process.env.REACT_APP_FLASK_URL + `NCAA_WBB_Attendance_Graph?team_id=${team.id}&team_name=${team.name}`)
+        let url = `NCAA_WBB_Attendance_Graph?team_id=${team.id}&team_name=${team.name}`;
+        women ? url += "&women=true" : url += "&women=false";
+        fetch(process.env.REACT_APP_FLASK_URL + url)
             .then(response => response.json())
             .then(data => {
                 return setGraph(data);
@@ -33,16 +36,20 @@ const Graph = ({ team, deleteGraph }) => {
                 throw error;
             }
             const el = document.getElementById('attendance');
-            embed("#graph" + team.id, spec, embedOpt)
+            let graphID = "#graph" + team.id + (women ? "W" : "M");
+            embed(graphID, spec, embedOpt)
                 .catch(error => showError(el, error));
         }
     }, [graph, team]);
 
+
     return (
         <div className='graphContainer'>
-            <div id={"graph" + team.id}>{graph ? "" : "Loading..."}</div>
-            <button onClick={() => deleteGraph(team)} className='graphCloseButton'>X</button>
-            <p>Average Home Attendance: {graph && Math.round(graph.avg_home_attendance * 10) / 10}</p>
+            <div id={"graph" + team.id + (women ? "W" : "M")}>{graph ? "" : "Loading..."}</div>
+            {
+                graph &&
+                (<p>Average Home Attendance: {graph && (Math.round(graph.avg_home_attendance)).toLocaleString("en-US")}</p>)
+            }
         </div>
     );
 };
