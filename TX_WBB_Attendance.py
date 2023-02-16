@@ -145,12 +145,14 @@ def attendance_graph(attendance_info: teamAttendanceInfo, team_name: str) -> dic
         title = team_name + " (M)"
 
     chart = alt.Chart(df).mark_bar().encode(
-        x=alt.X('Opponent:O', sort=xSort),
+        x=alt.X('Opponent:O', sort=xSort, title=None),
         y='Attendance',
+        column='Location:N',
         color=alt.Color('Location',
                         scale=alt.Scale(
                             domain=['Home', 'Away', 'Neutral'],
-                            range=[team_color, 'darkgray', 'lightgray']))
+                            range=[team_color, 'darkgray', 'lightgray'])),
+        tooltip="Attendance"
     ).resolve_scale(
         x='independent'
     ).properties(
